@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -174,13 +175,13 @@ public class CommonSteps {
     @Then("the two response bodies are identical")
     public void verifyResponseBodiesMatch() {
         String[] responseBodies = {responses.get(responses.size() - 2).asString(), responses.get(responses.size() - 1).asString()};
-        for (int i = 0; i < responseBodies.length; i++) {
+        IntStream.range(0, responseBodies.length).forEach(i -> {
             if (responseBodies[i].startsWith("[")) {
                 responseBodies[i] = JsonPath.from(responseBodies[i]).getList("$").get(0).toString();
             } else {
                 responseBodies[i] = JsonPath.from(responseBodies[i]).get().toString();
             }
-        }
+        });
         assertThat(responseBodies[1], equalTo(responseBodies[0]));
     }
 
@@ -188,13 +189,11 @@ public class CommonSteps {
     //and then to a string but since it's a simple operation I have implemented it myself
     private String buildJsonString(Map<String, String> params) {
         StringBuilder requestBody = new StringBuilder("{");
-        for (String key : new ArrayList<>(params.keySet())) {
-            requestBody
-                    .append("\"").append(key).append("\"")
-                    .append(":")
-                    .append("\"").append(params.get(key)).append("\"")
-                    .append(",");
-        }
+        new ArrayList<>(params.keySet()).forEach(key -> requestBody
+                .append("\"").append(key).append("\"")
+                .append(":")
+                .append("\"").append(params.get(key)).append("\"")
+                .append(","));
         requestBody.deleteCharAt(requestBody.lastIndexOf(","));
         requestBody.append("}");
         return requestBody.toString();
