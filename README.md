@@ -2,6 +2,9 @@
 
 # API Testing with Java & RestAssured
 
+This is a fork - I am not an author of it.
+I want to make few commits to update it only.
+
 ## Overview
 This project provides an example for testing a RESTful API using Cucumber BDD feature files with step definitions written in Java and making use of the popular RestAssured library as an alternative to automated API testing with Postman. As such, it can be used to kickstart testing of other APIs with minimal changes to the project.
 
@@ -39,15 +42,10 @@ As stated above, this project contains a Java test framework suitable for REST A
 
 ### Tech Stack
 As this is a Java project, build and dependency management is handled by Maven, so there is a `pom.xml` file defining the versions of the dependencies:
-* Java v11
-* Cucumber v6.11.0
-* RestAssured v4.4.0
+* Java v25
+* Cucumber v7.32.0
+* RestAssured v5.5.6
 
-The code is written in Java and built using v11 of the JDK. There are more up-to-date JDK versions available  - Oracle is up to Java 17 at the time of writing. However, I used Amazon Coretto 11 (the latest LTS release of this popular OpenJDK build) as it is the distribution I am most used to.
-
-The Cucumber version is the latest version at the time of writing (released May 2021).
-
-I have used the latest RestAssured version (also released May 2021) available at the time of writing and as it has a dependency on Hamcrest I have used that as the assertion library. As RestAssured has built-in methods for schema validation, no further libraries are needed (unlike in the HTTP Client project).
 
 ### Project Structure
 The project uses a standard structure and naming convention, incorporating the URL of the website under test, i.e. the test code is all stored under `src/test/java/com/typicode/jsonplaceholder`. Below that we have:
